@@ -1,6 +1,6 @@
 {
   "name": "angular-templates-code-coverage",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
