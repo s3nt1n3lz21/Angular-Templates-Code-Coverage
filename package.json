@@ -1,0 +1,19 @@
+{
+  "name": "angular-templates-code-coverage",
+  "version": "1.0.0",
+  "description": "Provides code coverage for angular templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "angular-templates-code-coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage.git"
+  },
+  "author": "Neil Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
+  },
+  "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme"
+}
