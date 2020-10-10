@@ -5,15 +5,16 @@ This is a simple script to check the code coverage of your html templates by che
 
 ## Install
 
-npm install angular-templates-code-coverage
+npm install angular-templates-code-coverage --save-dev
 
 ## Usage
 
-const templatesCoverage = require("angular-templates-code-coverage");
+In the terminal type
 
-templatesCoverage();
+angular-templates
 
-Algorithm
+## Algorithm
+
 - Search For NgIfs And NgFors
 - Grab The Ids Of These Elements
 - Search For Unit Tests With A Title That Includes This Id
