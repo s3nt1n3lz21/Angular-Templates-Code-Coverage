@@ -1,0 +1,7 @@
+{
+    "name": "angular-templates-code-coverage-test",
+    "version": "1.0.0",
+    "dependencies": {
+        "angular-templates-code-coverage": "^1.1.0"
+    }
+}
