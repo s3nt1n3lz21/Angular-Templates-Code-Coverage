@@ -11,7 +11,7 @@ npm install angular-templates-code-coverage --save-dev
 
 In the terminal type
 
-angular-templates
+template-coverage
 
 ## Algorithm
 
