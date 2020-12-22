@@ -11,10 +11,20 @@ function main(args) {
     let failBelow = 80; // Fail if the html coverage is below this percentage
     let coveragePercentage = 0;
     const tests = [];
-    const htmlFileName = './test/assets/test.html';
-    const htmlFile = loadFile(htmlFileName)
+    let htmlFileName = '';
+    let specFileName = '';
+    fs.readdirSync(process.cwd()).forEach(fileName => {
+        console.log(fileName);
+        if (fileName.endsWith('.html')) {
+            htmlFileName = fileName
+        }
+        if(fileName.endsWith('.spec.ts')) {
+            specFileName = fileName;
+        }
+    });
 
     // Find all the ngIfs in the file
+    let htmlFile = loadFile(htmlFileName)
     let ngIfs = findNgIfs(htmlFile)
     for (i=0; i < ngIfs.length; i++) {
         tests.push({file: htmlFileName, test: 'ngIf should show', id: '', specExists: false})
@@ -29,7 +39,6 @@ function main(args) {
     }
 
     // Check tests exist for all the ngIfs
-    const specFileName = './test/assets/testNgIfNotShow.spec.ts'
     const specFile = loadFile(specFileName)
     for (i=0; i < ids.length; i++) {
         let id = ids[i];
