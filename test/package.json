@@ -2,6 +2,12 @@
     "name": "angular-templates-code-coverage-test",
     "version": "1.0.0",
     "dependencies": {
+        "@angular/core": "^9.1.1",
+        "@angular/platform-browser": "^9.1.1",
         "angular-templates-code-coverage": "^1.1.0"
+    },
+    "devDependencies": {
+        "@types/jasmine": "^2.8.11",
+        "@types/node": "^12.11.1"
     }
 }

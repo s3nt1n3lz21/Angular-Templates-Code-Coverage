@@ -1,3 +1,5 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TestComponent } from "./ngIfShow.component";
 
 describe('TestComponent', () => {
@@ -27,3 +29,5 @@ describe('TestComponent', () => {
         expect(testElement).toBeTruthy();
     });
 });
+
+

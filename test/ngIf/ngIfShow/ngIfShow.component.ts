@@ -8,6 +8,7 @@ import {
     styleUrls: ['./app-test.component.scss']
 })
 export class TestComponent {
+    public loading: boolean = false;
 
     constructor() {
     }
