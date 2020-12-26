@@ -86,31 +86,26 @@ function checkForTests(fileName, tests) {
     let htmlFileName = fileName + '.component.html'
     let specFileName = fileName + '.component.spec.ts'
 
-    console.log('htmlFileName: ', htmlFileName)
-
-    // Find all the ngIfs in the file
+    // Find all the ngIfs in the file and corresponding ids
     let htmlFile = loadFile(htmlFileName)
     let ngIfs = findNgIfs(htmlFile)
-    for (i=0; i < ngIfs.length; i++) {
-        tests.push({file: htmlFileName, test: 'ngIf should show', id: '', specExists: false})
-        tests.push({file: htmlFileName, test: 'ngIf shouldnt show', id: '', specExists: false})
-    }
-
-    // Find all the ids of the ngIfs
     let ids = checkIds(ngIfs)
-    for (i=0; i < ngIfs.length; i++) {
-        tests[2*i].id = ids[i]
-        tests[2*i+1].id = ids[i]
+    let specFile = '';
+    try {
+        specFile = loadFile(specFileName)
+    } catch (e) {
+        console.error(e)
     }
 
-    // Check tests exist for all the ngIfs
-    const specFile = loadFile(specFileName)
-    for (i=0; i < ids.length; i++) {
-        let id = ids[i];
-        // Don't check for the spec if the id doesn't exist
-        if (id != '') {
-            tests[2*i].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
-            tests[2*i+1].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
+    // Add tests for each ngIf in this file
+    for (i=0; i < ngIfs.length; i++) {
+        // Add tests for each 
+        tests.push({file: htmlFileName, test: 'ngIf should show', id: ids[0], specExists: false})
+        tests.push({file: htmlFileName, test: 'ngIf shouldnt show', id: ids[0], specExists: false})
+        // If there is a spec file and there are ids check the test exists
+        if (specFile && id != '') {
+            tests[tests.length-2].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
+            tests[tests.length-1].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
         }
     }
 };
