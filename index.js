@@ -1,27 +1,92 @@
 #! /usr/bin/env node
 var fs = require('fs');
+var path = require('path')
 function loadFile(path) {
     let dataString;
     dataString = fs.readFileSync(path).toString()
     return dataString
 }
 
+function checkFolders(path) {
+    workingDirectoryFiles = fs.readdirSync(path).forEach(fileName => {
+        path = process.cwd()+'/src/app'+'/'+fileName
+        // If the file is a directory check the folders in there
+        if (fs.lstatSync(fileName).isDirectory()) {
+            checkFolders(path);
+        // Else check for tests
+        } else {
+
+        }
+    });
+}
+
+function recFindByExt(base,ext,files,result) 
+{
+    files = files || fs.readdirSync(base) 
+    result = result || [] 
+
+    files.forEach( 
+        function (file) {
+            var newbase = path.join(base,file)
+            if ( fs.statSync(newbase).isDirectory() )
+            {
+                result = recFindByExt(newbase,ext,fs.readdirSync(newbase),result)
+            }
+            else
+            {
+                if ( file.substr(-1*(ext.length+1)) == '.' + ext )
+                {
+                    result.push(newbase)
+                } 
+            }
+        }
+    )
+    return result
+}
+
 function main(args) {
     let arg1 = args[0]
     let failBelow = 80; // Fail if the html coverage is below this percentage
-    let coveragePercentage = 0;
     const tests = [];
-    let htmlFileName = '';
-    let specFileName = '';
-    fs.readdirSync(process.cwd()).forEach(fileName => {
-        console.log(fileName);
-        if (fileName.endsWith('.html')) {
-            htmlFileName = fileName
-        }
-        if(fileName.endsWith('.spec.ts')) {
-            specFileName = fileName;
-        }
-    });
+    let path = process.cwd();
+
+    // If the dir src/app exists check each folder in there
+    if (fs.existsSync('src/app')) {
+        path = process.cwd()+'/src/app'
+        tsFiles = recFindByExt(path,'component.ts')
+        tsFiles.filter(fileName => !fileName.endsWith('component.spec.ts'))
+        specFiles = recFindByExt(path,'component.spec.ts')
+        htmlFiles = recFindByExt(path,'component.html')
+    // Else check folders in the current directory
+    } else {
+        path = process.cwd();
+        tsFiles = recFindByExt(path,'component.ts')
+        tsFiles = tsFiles.filter(fileName => !fileName.endsWith('component.spec.ts'))
+        console.log('tsFiles: ', tsFiles)
+        specFiles = recFindByExt(path,'component.spec.ts')
+        console.log('specFiles: ', specFiles)
+        htmlFiles = recFindByExt(path,'component.html')
+        console.log('htmlFiles: ', htmlFiles)
+        
+        // For each html file check a component.spec.ts file exists.
+        htmlFiles.forEach(fileName => {
+            prefix = fileName.split('.')[0]
+            console.log('prefix: ', prefix)
+            checkForTests(prefix, tests)
+            // if prefix
+        })
+    }
+
+    showCoverage(tests, failBelow)
+}
+
+function checkForTests(fileName, tests) {
+
+    // If its a folder check the lower
+    let htmlFileName = fileName + '.component.html'
+    let specFileName = fileName + '.component.spec.ts'
+
+    console.log('htmlFileName: ', htmlFileName)
 
     // Find all the ngIfs in the file
     let htmlFile = loadFile(htmlFileName)
@@ -48,7 +113,9 @@ function main(args) {
             tests[2*i+1].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
         }
     }
-    
+};
+
+function showCoverage(tests, failBelow) {
     // Print out the test results to console
     console.table(tests);
     coveragePercentage = calculateCoverage(tests);
@@ -65,7 +132,7 @@ function main(args) {
     // test.html     ngIf shouldnt show
     
     // Coverage: 50%
-};
+}
 
 // Grab a list of all the elements with an ngIf
 function findNgIfs(file) {

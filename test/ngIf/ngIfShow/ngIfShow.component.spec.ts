@@ -1,4 +1,4 @@
-import { TestComponent } from "./test.component";
+import { TestComponent } from "./ngIfShow.component";
 
 describe('TestComponent', () => {
     let component: TestComponent;
