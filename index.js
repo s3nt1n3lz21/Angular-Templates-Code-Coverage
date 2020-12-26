@@ -101,6 +101,9 @@ function checkForTests(fileNamePrefix, tests) {
 
 function showCoverage(tests, failBelow) {
     // Print out the test results to console
+    tests.forEach((test) => {
+        test.file = test.file.split('\\')[test.file.split('\\').length-1]
+    })
     console.table(tests);
     coveragePercentage = calculateCoverage(tests);
     console.log('Coverage: ' + coveragePercentage + '%');
