@@ -53,38 +53,27 @@ function main(args) {
     // If the dir src/app exists check each folder in there
     if (fs.existsSync('src/app')) {
         path = process.cwd()+'/src/app'
-        tsFiles = recFindByExt(path,'component.ts')
-        tsFiles.filter(fileName => !fileName.endsWith('component.spec.ts'))
-        specFiles = recFindByExt(path,'component.spec.ts')
-        htmlFiles = recFindByExt(path,'component.html')
     // Else check folders in the current directory
     } else {
         path = process.cwd();
-        tsFiles = recFindByExt(path,'component.ts')
-        tsFiles = tsFiles.filter(fileName => !fileName.endsWith('component.spec.ts'))
-        console.log('tsFiles: ', tsFiles)
-        specFiles = recFindByExt(path,'component.spec.ts')
-        console.log('specFiles: ', specFiles)
-        htmlFiles = recFindByExt(path,'component.html')
-        console.log('htmlFiles: ', htmlFiles)
-        
-        // For each html file check a component.spec.ts file exists.
-        htmlFiles.forEach(fileName => {
-            prefix = fileName.split('.')[0]
-            console.log('prefix: ', prefix)
-            checkForTests(prefix, tests)
-            // if prefix
-        })
     }
 
+    // For each html file check a component.spec.ts file exists and the html tests exist
+    htmlFiles = recFindByExt(path,'component.html')
+    htmlFiles.forEach(fileName => {
+        fileNamePrefix = fileName.split('.')[0]
+        checkForTests(fileNamePrefix, tests)
+    })
+
+    // Show whether or not the tests exist and the coverage
     showCoverage(tests, failBelow)
 }
 
-function checkForTests(fileName, tests) {
+function checkForTests(fileNamePrefix, tests) {
 
     // If its a folder check the lower
-    let htmlFileName = fileName + '.component.html'
-    let specFileName = fileName + '.component.spec.ts'
+    let htmlFileName = fileNamePrefix + '.component.html'
+    let specFileName = fileNamePrefix + '.component.spec.ts'
 
     // Find all the ngIfs in the file and corresponding ids
     let htmlFile = loadFile(htmlFileName)
