@@ -76,23 +76,26 @@ function checkForTests(fileNamePrefix, tests) {
     // Find all the ngIfs in the file and corresponding ids
     let htmlFile = loadFile(htmlFileName)
     let ngIfs = findNgIfs(htmlFile)
-    let ids = checkIds(ngIfs)
-    let specFile = '';
-    try {
-        specFile = loadFile(specFileName)
-    } catch (e) {
-        console.error(e)
-    }
 
-    // Add tests for each ngIf in this file
-    for (i=0; i < ngIfs.length; i++) {
-        // Add tests for each 
-        tests.push({file: htmlFileName, test: 'ngIf should show', id: ids[0], specExists: false})
-        tests.push({file: htmlFileName, test: 'ngIf shouldnt show', id: ids[0], specExists: false})
-        // If there is a spec file and there are ids check the test exists
-        if (specFile && id != '') {
-            tests[tests.length-2].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
-            tests[tests.length-1].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
+    if (ngIfs) {
+        let ids = checkIds(ngIfs)
+        let specFile = '';
+        try {
+            specFile = loadFile(specFileName)
+        } catch (e) {
+            console.error(e)
+        }
+    
+        // Add tests for each ngIf in this file
+        for (i=0; i < ngIfs.length; i++) {
+            // Add tests for each 
+            tests.push({file: htmlFileName, test: 'ngIf should show', id: ids[0], specExists: false})
+            tests.push({file: htmlFileName, test: 'ngIf shouldnt show', id: ids[0], specExists: false})
+            // If there is a spec file and there are ids check the test exists
+            if (specFile && id != '') {
+                tests[tests.length-2].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
+                tests[tests.length-1].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
+            }
         }
     }
 };
