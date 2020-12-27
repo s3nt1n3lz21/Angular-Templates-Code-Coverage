@@ -21,7 +21,7 @@ In the table it will say the 'show' test exists, but the 'shouldnt show' test do
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
-NPM  https://www.npmjs.com/package/angular-templates-code-coverage   
+NPM  https://www.npmjs.com/package/angular-templates-code-coverage
 
 ## Install
 
