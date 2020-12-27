@@ -1,10 +1,9 @@
 # Angular-Templates-Code-Coverage
-A Script To Check The Coverage Of Your Angular Templates
 
-This is a script to check unit tests exist for your html templates. It checks for unit tests with titles that include the id of the element.
+This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-It checks for:
-    ngIf elements - A test that the element is shown and a test that the element is not shown
+It checks for:  
+* ngIf elements - A test that the element is shown and a test that the element is not shown
 
 For example suppose we had the following html file with a single ngIf div element
 
@@ -14,9 +13,13 @@ And we only had a test to check the ngIf is shown
 
 ![Only Show Test Spec](./images/onlyShowTestSpec.png)
 
-In the table it will say the 'show' test exists, but the 'shouldnt show' test fails
+In the table it will say the 'show' test exists, but the 'shouldnt show' test doesn't exist.
 
 ![Template Coverage](./images/template-coverage.png)
+
+It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
+
+
 
 NPM  https://www.npmjs.com/package/angular-templates-code-coverage   
 Github  https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage
