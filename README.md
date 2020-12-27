@@ -33,3 +33,12 @@ npm install angular-templates-code-coverage --save-dev
 In the terminal type
 
 template-coverage --failBelow=70
+
+## Future
+
+* Checking tests exist for ngFors and the correct number of elements appear
+* Checking tests exist for checking the correct text displays
+* Checking tests exist for ngClass and the correct classes are applied
+* Checking tests exist for checking the correct functions are called on child component output events
+* Checking tests exist for checking child components are passed the correct inputs
+* Checking tests exist for checking user inputs update the correct field
