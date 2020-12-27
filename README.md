@@ -32,4 +32,4 @@ npm install angular-templates-code-coverage --save-dev
 
 In the terminal type
 
-template-coverage
+template-coverage --failBelow=70

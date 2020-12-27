@@ -1,23 +1,11 @@
 #! /usr/bin/env node
 var fs = require('fs');
 var path = require('path')
+
 function loadFile(path) {
     let dataString;
     dataString = fs.readFileSync(path).toString()
     return dataString
-}
-
-function checkFolders(path) {
-    workingDirectoryFiles = fs.readdirSync(path).forEach(fileName => {
-        path = process.cwd()+'/src/app'+'/'+fileName
-        // If the file is a directory check the folders in there
-        if (fs.lstatSync(fileName).isDirectory()) {
-            checkFolders(path);
-        // Else check for tests
-        } else {
-
-        }
-    });
 }
 
 function recFindByExt(base,ext,files,result) 
@@ -45,8 +33,18 @@ function recFindByExt(base,ext,files,result)
 }
 
 function main(args) {
-    let arg1 = args[0]
     let failBelow = 80; // Fail if the html coverage is below this percentage
+    let keyValueArgs = new Map()
+    args.forEach(arg => {
+        let keyValue = arg.split('=')
+        keyValueArgs.set(keyValue[0].replace('--',''),keyValue[1])
+
+        // Set the failBelow value
+        if (keyValue[0].replace('--','') == 'failBelow') {
+            failBelow = keyValue[1]
+        }
+    })
+
     const tests = [];
     let path = process.cwd();
 
