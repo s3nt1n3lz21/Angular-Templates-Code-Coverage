@@ -85,12 +85,16 @@ function checkForTests(fileNamePrefix, tests) {
         } catch (e) {
             console.error(e)
         }
-    
+
         // Add tests for each ngIf in this file
         for (i=0; i < ngIfs.length; i++) {
+            let index = htmlFile.indexOf(ids[i]);
+            let tempString = htmlFile.substring(0, index);
+            let lineNumber = tempString.split('\n').length;
+
             // Add tests for each 
-            tests.push({file: htmlFileName, test: 'ngIf should show', id: ids[i], specExists: false})
-            tests.push({file: htmlFileName, test: 'ngIf shouldnt show', id: ids[i], specExists: false})
+            tests.push({file: htmlFileName + ':' + lineNumber, test: 'ngIf should show', id: ids[i], specExists: false})
+            tests.push({file: htmlFileName + ':' + lineNumber, test: 'ngIf shouldnt show', id: ids[i], specExists: false})
             // If there is a spec file and there are ids check the test exists
             if (specFile && id != '') {
                 tests[tests.length-2].specExists = checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
