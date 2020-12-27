@@ -128,7 +128,7 @@ function findNgIfs(file) {
 
 // Check which elements have an id and print file names and line numbers of ngIfs that do not have an id
 function checkIds(elements) {
-    len = elements.length
+    len = elements ? elements.length : 0
     ids = []
     for (let i = 0; i < len; i++) {
         const regexToSearchFor = /id=".*"/g;
