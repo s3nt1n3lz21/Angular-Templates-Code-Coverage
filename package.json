@@ -1,6 +1,6 @@
 {
-  "name": "template-coverage",
-  "version": "1.4.3",
+  "name": "angular-templates-code-coverage",
+  "version": "3.0.0",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
@@ -22,5 +22,6 @@
     "node-fetch": "^2.6.1",
     "whatwg-fetch": "^3.4.1",
     "xmlhttprequest": "^1.8.0"
-  }
+  },
+  "publishConfig": { "registry": "https://r.privjs.com" }
 }
