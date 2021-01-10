@@ -9,15 +9,15 @@ It checks for:
 
 For example suppose we had the following html file 'ngIfShow.component.html' with a single ngIf div element
 
-![Only Show Test HTML](./images/onlyShowTestHTML.png)
+![](https://1drv.ms/u/s!Ajv5iLxqNb-ZhKR0l0bc0wecAH-sRw?e=6rHMLG)
 
 And we only had a test to check the ngIf is shown
 
-![Only Show Test Spec](./images/onlyShowTestSpec.png)
+![](https://1drv.ms/u/s!Ajv5iLxqNb-ZhKRzs_0x3ut5fO0F1g)
 
 In the table it will say the 'show' test exists, but the 'shouldnt show' test doesn't exist. Indexes 8 and 9.
 
-![Template Coverage](./images/template-coverage.png)
+![](https://1drv.ms/u/s!Ajv5iLxqNb-ZhKRytc_V96OCbwZ-lw)
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
