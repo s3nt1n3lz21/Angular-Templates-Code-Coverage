@@ -7,7 +7,7 @@ It checks for:
     * A test that the element is shown. The title of the test should contain the words 'should show' and the id of the element.
     * A test that the element is not shown. The title of the test should contain the words 'shouldnt show' and the id of the element.
 
-![Imgur](https://i.imgur.com/cfqtg3L.png)
+![Imgur](https://i.imgur.com/K1JLx4B.png)
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
