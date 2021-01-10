@@ -170,7 +170,7 @@ function calculateCoverage(tests) {
             numSpecExists += 1
         }
     }
-    return parseFloat(numSpecExists)/tests.length*100;
+    return Math.round((parseFloat(numSpecExists)/tests.length*100 + Number.EPSILON) * 100) / 100
 }
 
 var args = process.argv.slice(2);
