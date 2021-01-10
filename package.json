@@ -18,10 +18,5 @@
     "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
   },
   "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme",
-  "dependencies": {
-    "node-fetch": "^2.6.1",
-    "whatwg-fetch": "^3.4.1",
-    "xmlhttprequest": "^1.8.0"
-  },
   "publishConfig": { "registry": "https://r.privjs.com" }
 }
