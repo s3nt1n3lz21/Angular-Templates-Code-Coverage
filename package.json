@@ -1,6 +1,6 @@
 {
   "name": "angular-templates-code-coverage",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
@@ -18,5 +18,6 @@
     "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
   },
   "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme",
-  "publishConfig": { "registry": "https://r.privjs.com" }
+  "publishConfig": { "registry": "https://r.privjs.com" },
+  "type": "module"
 }
