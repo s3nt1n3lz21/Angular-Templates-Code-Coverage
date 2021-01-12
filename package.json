@@ -4,7 +4,8 @@
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
-    "test": "angular-templates-code-coverage",
+    "test": "jest --verbose=true --failBelow=0",
+    "test-debug": "jest --verbose=true --failBelow=0",
     "run": "bin/index.js"
   },
   "bin": "./index.js",
@@ -17,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
   },
-  "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme"
+  "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme",
+  "jest": {
+    "verbose": true,
+    "testPathIgnorePatterns": [
+      "spec.ts"
+    ]
+  },
+  "type": "module"
 }
