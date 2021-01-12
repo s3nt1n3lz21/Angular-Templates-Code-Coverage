@@ -182,8 +182,9 @@ let TemplateCoverage = class {
     }
 }
 
+// var templateCoverage = new TemplateCoverage()
 // var args = process.argv.slice(2);
-// main(args);
+// templateCoverage.main(args)
 
 module.exports = {
     TemplateCoverage: TemplateCoverage
