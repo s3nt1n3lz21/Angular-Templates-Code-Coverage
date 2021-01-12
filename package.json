@@ -1,6 +1,6 @@
 {
   "name": "angular-templates-code-coverage",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
   },
-  "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme"
+  "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme",
+  "type": "module"
 }
