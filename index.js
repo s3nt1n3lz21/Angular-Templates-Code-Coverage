@@ -184,5 +184,3 @@ let TemplateCoverage = class {
 var templateCoverage = new TemplateCoverage()
 var args = process.argv.slice(2);
 templateCoverage.main(args)
-
-// Minimum: ngIf only, 1 should show test and 1 shouldn't show test
