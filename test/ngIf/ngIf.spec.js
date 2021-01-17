@@ -1,11 +1,11 @@
-let index = require("../../index");
+let TemplateCoverage = require("../../template-coverage");
 
 describe('ngIf', () => {
 
-    let templateCoverage = new index.TemplateCoverage();
+    let templateCoverage = new TemplateCoverage();
 
     beforeEach(() => {
-        templateCoverage = new index.TemplateCoverage();
+        templateCoverage = new TemplateCoverage();
         templateCoverage.main(['--failBelow=0'])
     });
 
@@ -13,7 +13,6 @@ describe('ngIf', () => {
         const tests = templateCoverage.tests.filter(test => 
             test.file.split(':')[0] === 'ngIfShow.component.html'
         )
-        console.log('index.tests: ', index.tests)
         const expectedTests = [
             {file: 'ngIfShow.component.html:1', test: 'ngIf should show', id: 'testNgIf', specExists: true},
             {file: 'ngIfShow.component.html:1', test: 'ngIf shouldnt show', id: 'testNgIf', specExists: false}
