@@ -1,5 +1,5 @@
-var fs = require('fs');
-var path = require('path')
+import * as fs from 'fs';
+import * as path from 'path';
 
 let TemplateCoverage = class {
 
