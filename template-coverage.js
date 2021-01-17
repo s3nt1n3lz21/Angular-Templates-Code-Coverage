@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-let TemplateCoverage = class {
+export default TemplateCoverage = class {
 
     constructor() {
         this.tests = []
@@ -180,5 +180,3 @@ let TemplateCoverage = class {
         return Math.round((parseFloat(numSpecExists)/this.tests.length*100 + Number.EPSILON) * 100) / 100
     }
 }
-
-module.exports = TemplateCoverage;

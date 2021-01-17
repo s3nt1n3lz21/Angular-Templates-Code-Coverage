@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 //module.js:
-import * as TemplateCoverage from './template-coverage';
+import TemplateCoverage from './template-coverage';
 
 var templateCoverage = new TemplateCoverage();
 var args = process.argv.slice(2);
