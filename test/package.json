@@ -1,10 +1,14 @@
 {
     "name": "angular-templates-code-coverage-test",
     "version": "1.0.0",
+    "scripts": {
+        "install-local": "npm install angular-templates-code-coverage --registry http://localhost:4873",
+        "test": "template-coverage"
+    },
     "dependencies": {
         "@angular/core": "^9.1.1",
         "@angular/platform-browser": "^9.1.1",
-        "angular-templates-code-coverage": "2.0.10"
+        "angular-templates-code-coverage": "^2.0.11"
     },
     "devDependencies": {
         "@types/jasmine": "^2.8.11",

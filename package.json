@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose=true --failBelow=0",
-    "test-debug": "jest --verbose=true --failBelow=0",
-    "run": "bin/index.js"
+    "run": "bin/index.js",
+    "publish-local": "npm publish --registry http://localhost:4873"
   },
   "bin": "./index.js",
   "repository": {
