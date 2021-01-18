@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export default TemplateCoverage = class {
+export default class TemplateCoverage {
 
     constructor() {
         this.tests = []
