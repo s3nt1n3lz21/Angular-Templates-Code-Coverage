@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "scripts": {
         "install-local": "npm install angular-templates-code-coverage --registry http://localhost:4873",
-        "test": "template-coverage"
+        "install-public": "npm install angular-templates-code-coverage --registry https://registry.npmjs.org/",
+        "test": "template-coverage",
+        "test-fail-0": "template-coverage --failBelow=0"
     },
     "dependencies": {
         "@angular/core": "^9.1.1",
