@@ -74,14 +74,20 @@ export default class TemplateCoverage {
     
     checkForTests(fileNamePrefix) {
     
-        // If its a folder check the lower
         let htmlFileName = fileNamePrefix + '.component.html'
         let specFileName = fileNamePrefix + '.component.spec.ts'
-    
-        // Find all the ngIfs in the file and corresponding ids
+
         let htmlFile = this.loadFile(htmlFileName)
+
+        // Find all the ngIfs in the file and corresponding ids
+        this.checkForNgIfTests(htmlFile, specFileName);
+        // Find all the ngFors in the file and corresponding ids
+        this.checkForNgForTests(htmlFile, specFileName);
+    };
+
+    checkForNgIfTests(htmlFile, specFileName) {
         let ngIfs = this.findNgIfs(htmlFile)
-    
+
         if (ngIfs) {
             let ids = this.checkIds(ngIfs)
             let specFile = '';
@@ -104,12 +110,42 @@ export default class TemplateCoverage {
                 
                 // If there is a spec file and there is an id check the test exists
                 if (specFile && id != '') {
-                    this.tests[this.tests.length-2].specExists = this.checkTestExistsNGIF(specFile, new RegExp(`it\\('should show.*${id}.*`))
-                    this.tests[this.tests.length-1].specExists = this.checkTestExistsNGIF(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
+                    this.tests[this.tests.length-2].specExists = this.checkTestExists(specFile, new RegExp(`it\\('should show.*${id}.*`))
+                    this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('shouldnt show.*${id}.*`))
                 }
             }
         }
-    };
+    }
+
+    checkForNgForTests() {
+        let ngFors = this.findNgFors(htmlFile)
+
+        if (ngFors) {
+            let ids = this.checkIds(ngFors)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                console.error(e)
+            }
+    
+            // Add tests for each ngIf in this file
+            for (let i=0; i < ngFors.length; i++) {
+                let index = htmlFile.indexOf(ngFors[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+    
+                // Add tests for each
+                this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'ngFor', id: id, specExists: false})
+                
+                // If there is a spec file and there is an id check the test exists
+                if (specFile && id != '') {
+                    this.tests[this.tests.length-2].specExists = this.checkTestExists(specFile, new RegExp(`it\\('should show the correct number of.*${id}.*`))
+                }
+            }
+        }
+    }
     
     showCoverage() {
         // Print out the test results to console
@@ -139,8 +175,15 @@ export default class TemplateCoverage {
         const ngIfElements = file.match(regexToSearchFor);
         return ngIfElements;
     }
+
+    // Grab a list of all the elements with an ngFor
+    findNgFors(file) {
+        const regexToSearchFor = /<[^/<>]*\*ngFor[^/<>]*>/g; // < something *ngFor something >
+        const ngForElements = file.match(regexToSearchFor);
+        return ngForElements;
+    }
     
-    // Check which elements have an id and print file names and line numbers of ngIfs that do not have an id
+    // Check which elements have an id
     checkIds(elements) {
         let len = elements ? elements.length : 0
         let ids = []
@@ -161,7 +204,7 @@ export default class TemplateCoverage {
     }
     
     // Look for a test title that matches the given regex string
-    checkTestExistsNGIF(specFile, testRegex) {
+    checkTestExists(specFile, testRegex) {
         const unitTest = specFile.match(testRegex);
         if (unitTest) {
             return true
