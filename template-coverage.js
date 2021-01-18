@@ -117,7 +117,7 @@ export default class TemplateCoverage {
         }
     }
 
-    checkForNgForTests() {
+    checkForNgForTests(htmlFile, specFileName) {
         let ngFors = this.findNgFors(htmlFile)
 
         if (ngFors) {
