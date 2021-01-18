@@ -22,7 +22,7 @@ describe('TestComponent', () => {
         componentFixture.detectChanges();
     });
 
-    it('should show the correct number of elements testNgFor', () => {
+    it('should show the correct number of elements testNgFor{{i}}', () => {
         component.items = items;
         componentFixture.detectChanges();
 
