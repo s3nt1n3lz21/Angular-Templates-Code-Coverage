@@ -80,12 +80,12 @@ export default class TemplateCoverage {
         let htmlFile = this.loadFile(htmlFileName)
 
         // Find all the ngIfs in the file and corresponding ids
-        this.checkForNgIfTests(htmlFile, specFileName);
+        this.checkForNgIfTests(htmlFileName, specFileName, htmlFile);
         // Find all the ngFors in the file and corresponding ids
-        this.checkForNgForTests(htmlFile, specFileName);
+        this.checkForNgForTests(htmlFileName, specFileName, htmlFile);
     };
 
-    checkForNgIfTests(htmlFile, specFileName) {
+    checkForNgIfTests(htmlFileName, specFileName, htmlFile) {
         let ngIfs = this.findNgIfs(htmlFile)
 
         if (ngIfs) {
@@ -117,7 +117,7 @@ export default class TemplateCoverage {
         }
     }
 
-    checkForNgForTests(htmlFile, specFileName) {
+    checkForNgForTests(htmlFileName, specFileName, htmlFile) {
         let ngFors = this.findNgFors(htmlFile)
 
         if (ngFors) {
