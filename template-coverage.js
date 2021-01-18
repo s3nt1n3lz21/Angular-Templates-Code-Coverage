@@ -141,7 +141,7 @@ export default class TemplateCoverage {
                 
                 // If there is a spec file and there is an id check the test exists
                 if (specFile && id != '') {
-                    this.tests[this.tests.length-2].specExists = this.checkTestExists(specFile, new RegExp(`it\\('should show the correct number of.*${id}.*`))
+                    this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('should show the correct number of.*${id}.*`))
                 }
             }
         }
