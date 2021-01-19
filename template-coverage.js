@@ -85,6 +85,8 @@ export default class TemplateCoverage {
         this.checkForNgForTests(htmlFileName, specFileName, htmlFile);
         // Find all the outputs in the file and check spec tests exist
         this.checkForOutputTests(htmlFileName, specFileName, htmlFile);
+        // Find all the inputs in the file and check spec tests exist
+        this.checkForInputTests(htmlFileName, specFileName, htmlFile);
     };
 
     checkForNgIfTests(htmlFileName, specFileName, htmlFile) {
@@ -184,6 +186,42 @@ export default class TemplateCoverage {
             }
         }
     }
+
+    checkForInputTests(htmlFileName, specFileName, htmlFile) {
+        let inputElements = this.findInputElements(htmlFile)
+
+        if (inputElements) {
+            let ids = this.checkIds(inputElements)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                // No spec file
+            }
+    
+            // Add tests for each ngIf in this file
+            for (let i=0; i < inputElements.length; i++) {
+                let index = htmlFile.indexOf(inputElements[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+
+                // For each output on this element
+                let inputNames = this.findInputNames(inputElements[i])
+                for (let j=0; j < inputNames.length; j++) {
+                    let inputName = inputNames[j];
+
+                    // Add tests for each output
+                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'input passed down correctly', id: `${inputName} ${id}`, specExists: false})
+                
+                    // If there is a spec file and there is an id check the test exists
+                    if (specFile && id != '') {
+                        this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*${inputName} ${id}.*`))
+                    }
+                }
+            }
+        }
+    }
     
     showCoverage() {
         // Print out the test results to console
@@ -235,6 +273,22 @@ export default class TemplateCoverage {
         let outputNames = []
         namesWithEquals.forEach((name) => outputNames.push(name.slice(1,name.length-2)));
         return outputNames;
+    }
+
+    // Grab a list of all the elements with inputs
+    findInputElements(file) {
+        const regexToSearchFor = /<[^/<>()]*\[[^/<>()]*\]="[^/<>()]*"[^/<>]*>/g; // < something [something]="something" something >
+        const outputElements = file.match(regexToSearchFor);
+        return outputElements;
+    }
+
+    // Get a list of all the input names for the given element
+    findInputNames(element) {
+        const regexToSearchFor = /\[[^/<>()='"]*\]=/g; // [something]=
+        const namesWithEquals = element.match(regexToSearchFor);
+        let inputNames = []
+        namesWithEquals.forEach((name) => inputNames.push(name.slice(1,name.length-2)));
+        return inputNames;
     }
     
     // Check which elements have an id
