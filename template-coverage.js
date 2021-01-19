@@ -176,11 +176,11 @@ export default class TemplateCoverage {
                     let outputName = outputNames[j];
 
                     // Add tests for each output
-                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'correct function on output', id: id, specExists: false})
+                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'correct function on output', id: `${outputName} ${id}`, specExists: false})
                 
                     // If there is a spec file and there is an id check the test exists
                     if (specFile && id != '') {
-                        this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*${outputName}.*${id}.*`))
+                        this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*${outputName} ${id}.*`))
                     }
                 }
             }
@@ -225,7 +225,7 @@ export default class TemplateCoverage {
 
     // Grab a list of all the elements with outputs
     findOutputElements(file) {
-        const regexToSearchFor = /<[^/<>()]*\([^/<>()]*\)="[^/<>()]*\([^/<>()]*\)"[^/<>()]*>/g; // < something (something)="something(something)" something >
+        const regexToSearchFor = /<[^/<>()]*\([^/<>()]*\)="[^/<>()]*\([^/<>()]*\)"[^/<>]*>/g; // < something (something)="something(something)" something >
         const outputElements = file.match(regexToSearchFor);
         return outputElements;
     }

@@ -10,7 +10,7 @@
     "dependencies": {
         "@angular/core": "^9.1.1",
         "@angular/platform-browser": "^9.1.1",
-        "angular-templates-code-coverage": "^3.1.7"
+        "angular-templates-code-coverage": "^3.1.12"
     },
     "devDependencies": {
         "@types/jasmine": "^2.8.11",
