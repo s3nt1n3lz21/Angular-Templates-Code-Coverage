@@ -2,8 +2,8 @@
 
 This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-Version: 3.0.10
-Updated: 18th Jan 2021
+Version: 3.2.0
+Updated: 19th Jan 2021
 
 It checks for:
 * ngIf elements - 
@@ -11,8 +11,10 @@ It checks for:
     * A test that the element is not shown. The title of the test should contain the words 'shouldnt show' and the id of the element.
 * ngFor elements -
     * A test that the correct number of elements are shown. The title of the test should contain the words 'should show the correct number of' and the id of the element.
+* outputs -
+    * A test for each output to check that the correct function is called. The title of each test should contain the name of the output, a space and then the id of the element. e.g. 'outputName id'.
 
-![Imgur](https://i.imgur.com/uL8nBgO.png)
+![Imgur](https://i.imgur.com/cqdX4o6.png)
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
@@ -36,6 +38,5 @@ template-coverage --failBelow=70
 
 * Checking tests exist for checking the correct text displays
 * Checking tests exist for ngClass and the correct classes are applied
-* Checking tests exist for checking the correct functions are called on child component output events
 * Checking tests exist for checking child components are passed the correct inputs
 * Checking tests exist for checking user inputs update the correct field
