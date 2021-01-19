@@ -79,10 +79,12 @@ export default class TemplateCoverage {
 
         let htmlFile = this.loadFile(htmlFileName)
 
-        // Find all the ngIfs in the file and corresponding ids
+        // Find all the ngIfs in the file and check spec tests exist
         this.checkForNgIfTests(htmlFileName, specFileName, htmlFile);
-        // Find all the ngFors in the file and corresponding ids
+        // Find all the ngFors in the file and check spec tests exist
         this.checkForNgForTests(htmlFileName, specFileName, htmlFile);
+        // Find all the outputs in the file and check spec tests exist
+        this.checkForOutputTests(htmlFileName, specFileName, htmlFile);
     };
 
     checkForNgIfTests(htmlFileName, specFileName, htmlFile) {
@@ -137,11 +139,49 @@ export default class TemplateCoverage {
                 let id = ids[i];
     
                 // Add tests for each
-                this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'ngFor', id: id, specExists: false})
+                this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'ngFor correct number elements', id: id, specExists: false})
                 
                 // If there is a spec file and there is an id check the test exists
                 if (specFile && id != '') {
                     this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('should show the correct number of.*${id}.*`))
+                }
+            }
+        }
+    }
+
+    checkForOutputTests(htmlFileName, specFileName, htmlFile) {
+        let outputElements = this.findOutputElements(htmlFile)
+        console.log('outputElements: ', outputElements);
+
+        if (outputElements) {
+            let ids = this.checkIds(outputElements)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                console.error(e)
+            }
+    
+            // Add tests for each ngIf in this file
+            for (let i=0; i < outputElements.length; i++) {
+                let index = htmlFile.indexOf(outputElements[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+
+                // For each output on this element
+                let outputNames = this.findOutputNames(outputElements[i])
+                console.log('outputNames: ', outputNames)
+                for (let j=0; j < outputNames.length; j++) {
+                    let outputName = outputNames[j];
+
+                    // Add tests for each output
+                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'correct function on output', id: id, specExists: false})
+                
+                    // If there is a spec file and there is an id check the test exists
+                    if (specFile && id != '') {
+                        this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*${outputName}.*${id}.*`))
+                    }
                 }
             }
         }
@@ -181,6 +221,22 @@ export default class TemplateCoverage {
         const regexToSearchFor = /<[^/<>]*\*ngFor[^/<>]*>/g; // < something *ngFor something >
         const ngForElements = file.match(regexToSearchFor);
         return ngForElements;
+    }
+
+    // Grab a list of all the elements with outputs
+    findOutputElements(file) {
+        const regexToSearchFor = /<[^/<>()]*\([^/<>()]*\)="[^/<>()]*\([^/<>()]*\)"[^/<>()]*>/g; // < something (something)="something(something)" something >
+        const outputElements = file.match(regexToSearchFor);
+        return outputElements;
+    }
+
+    // Get a list of all the output names for the given element
+    findOutputNames(element) {
+        const regexToSearchFor = /\([^/<>()]*\)=/g; // (something)=
+        const namesWithEquals = element.match(regexToSearchFor);
+        let outputNames = []
+        namesWithEquals.forEach((name) => outputNames.push(name.slice(1,name.length-2)));
+        return outputNames;
     }
     
     // Check which elements have an id
