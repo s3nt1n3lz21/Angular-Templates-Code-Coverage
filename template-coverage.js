@@ -151,7 +151,6 @@ export default class TemplateCoverage {
 
     checkForOutputTests(htmlFileName, specFileName, htmlFile) {
         let outputElements = this.findOutputElements(htmlFile)
-        console.log('outputElements: ', outputElements);
 
         if (outputElements) {
             let ids = this.checkIds(outputElements)
@@ -171,7 +170,6 @@ export default class TemplateCoverage {
 
                 // For each output on this element
                 let outputNames = this.findOutputNames(outputElements[i])
-                console.log('outputNames: ', outputNames)
                 for (let j=0; j < outputNames.length; j++) {
                     let outputName = outputNames[j];
 
