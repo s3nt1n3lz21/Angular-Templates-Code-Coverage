@@ -96,7 +96,7 @@ export default class TemplateCoverage {
             try {
                 specFile = this.loadFile(specFileName)
             } catch (e) {
-                console.error(e)
+                // No spec file
             }
     
             // Add tests for each ngIf in this file
@@ -128,7 +128,7 @@ export default class TemplateCoverage {
             try {
                 specFile = this.loadFile(specFileName)
             } catch (e) {
-                console.error(e)
+                // No spec file
             }
     
             // Add tests for each ngIf in this file
@@ -158,7 +158,7 @@ export default class TemplateCoverage {
             try {
                 specFile = this.loadFile(specFileName)
             } catch (e) {
-                console.error(e)
+                // No spec file
             }
     
             // Add tests for each ngIf in this file
