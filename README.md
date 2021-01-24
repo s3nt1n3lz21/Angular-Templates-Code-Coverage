@@ -41,3 +41,9 @@ template-coverage --failBelow=70
 * Checking tests exist for checking the correct text displays
 * Checking tests exist for ngClass and the correct classes are applied
 * Checking tests exist for checking user inputs update the correct field
+
+## Report Bugs And Request New Features
+
+You can report bugs and request new features here.
+
+https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage-Feedback
