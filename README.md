@@ -2,8 +2,8 @@
 
 This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-Version: 3.3.0
-Updated: 19th Jan 2021
+Version: 3.3.1
+Updated: 24th Jan 2021
 
 It checks for:
 * ngIf elements - 
@@ -41,3 +41,9 @@ template-coverage --failBelow=70
 * Checking tests exist for checking the correct text displays
 * Checking tests exist for ngClass and the correct classes are applied
 * Checking tests exist for checking user inputs update the correct field
+
+## Report Bugs And Request New Features
+
+You can report bugs and request new features here.
+
+https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage-Feedback
