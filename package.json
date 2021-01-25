@@ -1,6 +1,6 @@
 {
   "name": "angular-templates-code-coverage",
-  "version": "2.0.20",
+  "version": "2.0.21",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
@@ -10,14 +10,15 @@
     "publish-public": "npm publish --registry https://registry.npmjs.org/"
   },
   "bin": "./index.js",
+  "keywords": ["angular","template","coverage","unit","tests","html"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage.git"
+    "url": "git+https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage-Feedback.git"
   },
   "author": "Neil Smith",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage/issues"
+    "url": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage-Feedback/issues"
   },
   "homepage": "https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage#readme",
   "jest": {

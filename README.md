@@ -2,8 +2,8 @@
 
 This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-Version: 2.0.20
-Updated: 24th Jan 2021
+Version: 2.0.21
+Updated: 25th Jan 2021
 
 It checks for:
 * ngIf elements -
