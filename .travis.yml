@@ -4,5 +4,8 @@ node_js:
   - "12"
   - "14"
 
+before_install:
+  - npm i jest
+
 sudo: false
 after_success: npm run coverage
