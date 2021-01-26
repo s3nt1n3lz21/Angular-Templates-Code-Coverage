@@ -2,7 +2,7 @@
 
 This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-Version: 2.0.22
+Version: 2.0.23
 Updated: 26th Jan 2021
 
 It checks for:
@@ -18,8 +18,11 @@ It checks for:
 * ngClass -
     * A test for each class in ngClass to check that the class is applied. The title of the test should contain the words 'should apply' and then the name of the class and the id of the element. e.g. 'should apply show testId'.
     * A test for each class in ngClass to check that the class is not applied. The title of the test should contain the words 'should not apply' and then the name of the class and the id of the element. e.g. 'should not apply show testId'.
+* fields set correctly - 
+    * A test for each input element to check the correct field updates when the user enters a new value. The title of the test should contain the words 'set the field' and then the id of the element. e.g. 'set the field testId'.
+    * A test for each textarea element to check the correct field updates when the user enters a new value. The title of the test should contain the words 'set the field' and then the id of the element. e.g. 'set the field testId'.
 
-![Imgur](https://i.imgur.com/4HO3PIU.png)
+![Imgur](https://i.imgur.com/bm1piY1.png)
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
