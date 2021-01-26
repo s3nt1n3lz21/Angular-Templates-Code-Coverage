@@ -235,7 +235,6 @@ export default class TemplateCoverage {
                 specFile = this.loadFile(specFileName)
             } catch (e) {
                 // No spec file
-                console.error(e);
             }
     
             // Add tests for each ngIf in this file
