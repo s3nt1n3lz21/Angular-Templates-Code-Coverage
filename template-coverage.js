@@ -454,7 +454,7 @@ export default class TemplateCoverage {
 
     // Get a list of all the text area elements
     findTextAreaElements(file) {
-        const regexToSearchFor = /<textArea[^<>]*>/g; // <textArea something>
+        const regexToSearchFor = /<textarea[^<>]*>/g; // <textarea something>
         const ngClassElements = file.match(regexToSearchFor);
         return ngClassElements;
     }
