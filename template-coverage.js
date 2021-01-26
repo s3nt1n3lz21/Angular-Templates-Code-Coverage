@@ -89,6 +89,8 @@ export default class TemplateCoverage {
         this.checkForInputTests(htmlFileName, specFileName, htmlFile);
         // Find all the ngClasses in the file and check spec tests exist
         this.checkForNgClassTests(htmlFileName, specFileName, htmlFile);
+        // Find all the input and textArea elements in the file and check spec tests exist
+        this.checkForFieldsSetTests(htmlFileName, specFileName, htmlFile);
     };
 
     checkForNgIfTests(htmlFileName, specFileName, htmlFile) {
@@ -190,7 +192,7 @@ export default class TemplateCoverage {
     }
 
     checkForInputTests(htmlFileName, specFileName, htmlFile) {
-        let inputElements = this.findInputElements(htmlFile)
+        let inputElements = this.findElementsWithInputs(htmlFile)
 
         if (inputElements) {
             let ids = this.checkIds(inputElements)
@@ -201,7 +203,7 @@ export default class TemplateCoverage {
                 // No spec file
             }
     
-            // Add tests for each ngIf in this file
+            // Add tests for each input in this file
             for (let i=0; i < inputElements.length; i++) {
                 let index = htmlFile.indexOf(inputElements[i]);
                 let tempString = htmlFile.substring(0, index);
@@ -262,6 +264,62 @@ export default class TemplateCoverage {
             }
         }
     }
+
+    checkForFieldsSetTests(htmlFileName, specFileName, htmlFile) {
+        let inputElements = this.findInputElements(htmlFile);
+
+        if (inputElements) {
+            let ids = this.checkIds(inputElements)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                // No spec file
+            }
+    
+            // Add tests for each input in this file
+            for (let i=0; i < inputElements.length; i++) {
+                let index = htmlFile.indexOf(inputElements[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+
+                // Add a test for this input
+                this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'field set correctly', id: `${id}`, specExists: false});
+
+                if (specFile && id != '') {
+                    this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*set the field.*${id}.*`))
+                }
+            }
+        }
+
+        let textAreaElements = this.findTextAreaElements(htmlFile);
+
+        if (textAreaElements) {
+            let ids = this.checkIds(textAreaElements)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                // No spec file
+            }
+    
+            // Add tests for each text area in this file
+            for (let i=0; i < textAreaElements.length; i++) {
+                let index = htmlFile.indexOf(textAreaElements[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+
+                // Add a test for this input
+                this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'field set correctly', id: `${id}`, specExists: false});
+
+                if (specFile && id != '') {
+                    this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*set the field.*${id}.*`))
+                }
+            }
+        }
+    }
     
     showCoverage() {
         // Print out the test results to console
@@ -316,7 +374,7 @@ export default class TemplateCoverage {
     }
 
     // Grab a list of all the elements with inputs
-    findInputElements(file) {
+    findElementsWithInputs(file) {
         const regexToSearchFor = /<[^/<>()]*\[(?!ngClass)[^/<>()]*\]="[^/<>()]*"[^/<>]*>/g; // < something [something]="something" something >  not ngClass
         const outputElements = file.match(regexToSearchFor);
         return outputElements;
@@ -386,7 +444,21 @@ export default class TemplateCoverage {
 
         return ngClassNames;
     }
-    
+
+    // Get a list of all the input elements
+    findInputElements(file) {
+        const regexToSearchFor = /<input[^<>]*>/g; // <input something>
+        const ngClassElements = file.match(regexToSearchFor);
+        return ngClassElements;
+    }
+
+    // Get a list of all the text area elements
+    findTextAreaElements(file) {
+        const regexToSearchFor = /<textArea[^<>]*>/g; // <textArea something>
+        const ngClassElements = file.match(regexToSearchFor);
+        return ngClassElements;
+    }
+     
     // Check which elements have an id
     checkIds(elements) {
         let len = elements ? elements.length : 0
