@@ -87,6 +87,8 @@ export default class TemplateCoverage {
         this.checkForOutputTests(htmlFileName, specFileName, htmlFile);
         // Find all the inputs in the file and check spec tests exist
         this.checkForInputTests(htmlFileName, specFileName, htmlFile);
+        // Find all the ngClasses in the file and check spec tests exist
+        this.checkForNgClassTests(htmlFileName, specFileName, htmlFile);
     };
 
     checkForNgIfTests(htmlFileName, specFileName, htmlFile) {
@@ -222,6 +224,45 @@ export default class TemplateCoverage {
             }
         }
     }
+
+    checkForNgClassTests(htmlFileName, specFileName, htmlFile) {
+        let ngClassElements = this.findNGClassElements(htmlFile)
+
+        if (ngClassElements) {
+            let ids = this.checkIds(ngClassElements)
+            let specFile = '';
+            try {
+                specFile = this.loadFile(specFileName)
+            } catch (e) {
+                // No spec file
+                console.error(e);
+            }
+    
+            // Add tests for each ngIf in this file
+            for (let i=0; i < ngClassElements.length; i++) {
+                let index = htmlFile.indexOf(ngClassElements[i]);
+                let tempString = htmlFile.substring(0, index);
+                let lineNumber = tempString.split('\n').length;
+                let id = ids[i];
+
+                // For each ng class on this element
+                let ngClassNames = this.findNGClassNames(ngClassElements[i])
+                for (let j=0; j < ngClassNames.length; j++) {
+                    let ngClassName = ngClassNames[j];
+
+                    // Add tests for each ng class
+                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'class applied', id: `${ngClassName} ${id}`, specExists: false});
+                    this.tests.push({file: htmlFileName + ':' + lineNumber, test: 'class not applied', id: `${ngClassName} ${id}`, specExists: false});
+
+                    // If there is a spec file and there is an id check the test exists
+                    if (specFile && id != '') {
+                        this.tests[this.tests.length-2].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*should apply.*${ngClassName} ${id}.*`))
+                        this.tests[this.tests.length-1].specExists = this.checkTestExists(specFile, new RegExp(`it\\('.*should not apply.*${ngClassName} ${id}.*`))
+                    }
+                }
+            }
+        }
+    }
     
     showCoverage() {
         // Print out the test results to console
@@ -277,7 +318,7 @@ export default class TemplateCoverage {
 
     // Grab a list of all the elements with inputs
     findInputElements(file) {
-        const regexToSearchFor = /<[^/<>()]*\[[^/<>()]*\]="[^/<>()]*"[^/<>]*>/g; // < something [something]="something" something >
+        const regexToSearchFor = /<[^/<>()]*\[(?!ngClass)[^/<>()]*\]="[^/<>()]*"[^/<>]*>/g; // < something [something]="something" something >  not ngClass
         const outputElements = file.match(regexToSearchFor);
         return outputElements;
     }
@@ -289,6 +330,62 @@ export default class TemplateCoverage {
         let inputNames = []
         namesWithEquals.forEach((name) => inputNames.push(name.slice(1,name.length-2)));
         return inputNames;
+    }
+
+    // Get a list of all the elements with ngClass
+    findNGClassElements(file) {
+        const regexToSearchFor = /<[^/<>()]*\[ngClass\]="[^/<>()]*"[^/<>]*>/g; // < something [ngClass]="something" something >
+        const ngClassElements = file.match(regexToSearchFor);
+        return ngClassElements;
+    }
+
+    // Get a list of all the ng class names for the given element
+    findNGClassNames(element) {
+        let ngClassNames = []
+
+        // The className could be surrounded in single quotes or double qoutes
+        const singleQuoteRegexNgClassPart = /\[ngClass\]="[^/<>()="]*"/g; // [ngClass]="something"
+        const singleQuoteNGClassPart = element.match(singleQuoteRegexNgClassPart);
+        if (singleQuoteNGClassPart) {
+            const singleQuoteRegex = /'[^<>()='":]*'/g;
+            const singleQoutesNames = singleQuoteNGClassPart[0].match(singleQuoteRegex);
+            if (singleQoutesNames) {
+                singleQoutesNames.forEach((name) => ngClassNames.push(name.slice(1,name.length-1)));
+            }
+        }
+
+        const doubleQuoteRegexNgClassPart = /\[ngClass\]='[^/<>()=']*'/g; // [ngClass]='something'
+        const doubleQuoteNGClassPart = element.match(doubleQuoteRegexNgClassPart);
+        if (doubleQuoteNGClassPart) {
+            const doubleQuoteRegex = /"[^<>()='":]*"/g;
+            const doubleQuotesNames = doubleQuoteNGClassPart[0].match(doubleQuoteRegex);
+            if (doubleQuotesNames) {
+                doubleQuotesNames.forEach((name) => ngClassNames.push(name.slice(1,name.length-1)));
+            }
+        }
+
+        // The class name could be from a getter function
+        const singleQuoteGetterNgClassPartRegex = /\[ngClass\]='[^/<>()='"]*'/g; // [ngClass]='getCustomClass'
+        const singleQuoteGetterNGClassPart = element.match(singleQuoteGetterNgClassPartRegex);
+        if (singleQuoteGetterNGClassPart) {
+            const singleQuoteGetterPropertyNameRegex = /'[^<>()='":]*'/g; // 'getCustomClass'
+            const singleQuoteGetterPropertyNames = singleQuoteGetterNGClassPart[0].match(singleQuoteGetterPropertyNameRegex);
+            if (singleQuoteGetterPropertyNames) {
+                singleQuoteGetterPropertyNames.forEach((name) => ngClassNames.push(name.slice(1,name.length-1)));
+            }
+        }
+
+        const doubleQuoteGetterNgClassPartRegex = /\[ngClass\]="[^/<>()='"]*"/g; // [ngClass]="getCustomClass"
+        const doubleQuoteGetterNGClassPart = element.match(doubleQuoteGetterNgClassPartRegex);
+        if (doubleQuoteGetterNGClassPart) {
+            const doubleQuoteGetterPropertyNameRegex = /"[^<>()='":]*"/g; // "getCustomClass"
+            const doubleQuoteGetterPropertyNames = doubleQuoteGetterNGClassPart[0].match(doubleQuoteGetterPropertyNameRegex);
+            if (doubleQuoteGetterPropertyNames) {
+                doubleQuoteGetterPropertyNames.forEach((name) => ngClassNames.push(name.slice(1,name.length-1)));
+            }
+        }
+
+        return ngClassNames;
     }
     
     // Check which elements have an id
