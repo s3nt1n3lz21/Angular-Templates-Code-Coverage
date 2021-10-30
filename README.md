@@ -2,8 +2,8 @@
 
 This is a script to check unit tests exist for your Angular HTML templates. It checks for unit tests with titles that include the id of the html elements.
 
-Version: 3.3.7
-Updated: 26th Jan 2021
+Version: 3.3.8
+Updated: 30th Oct 2021
 
 It checks for:
 * ngIf elements - 
@@ -27,6 +27,7 @@ It checks for:
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
 NPM  https://www.npmjs.com/package/angular-templates-code-coverage
+GitHub https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage
 
 ## Install
 

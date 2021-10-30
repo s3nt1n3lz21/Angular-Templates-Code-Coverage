@@ -1,6 +1,6 @@
 {
   "name": "angular-templates-code-coverage",
-  "version": "3.3.7",
+  "version": "3.3.8",
   "description": "Provides code coverage for angular templates",
   "main": "index.js",
   "scripts": {
@@ -25,5 +25,9 @@
       "spec.ts"
     ]
   },
-  "type": "module"
+  "type": "module",
+  "keywords": [
+    "templates",
+    "coverage"
+  ]
 }
