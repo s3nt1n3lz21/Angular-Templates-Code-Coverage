@@ -35,3 +35,39 @@ npm install angular-templates-code-coverage --save-dev
 ## Usage
 
 template-coverage --failBelow=70
+
+## Development
+
+This git repo contains both the NPM package and a folder called 'test' that contains a test angular app with HTML Templates, that we can test the NPM package against before publishing it publicly to www.npmjs.com.
+
+We first create a local private NPM registry using Verdaccio. We publish the package to this Verdaccio registry, then download and install it from here into our test app.
+
+Install verdaccio
+
+npm install --global verdaccio
+
+Run verdaccio, a local private npm registry will be created on your computer at http://localhost:4873
+
+verdaccio
+
+Publish the package to this private repo using 
+
+npm publish --registry http://localhost:4873
+
+In the terminal, change directories to the root of the test app. Then install the package into the test app
+
+npm install angular-templates-code-coverage --registry http://localhost:4873
+
+Run the package for the test app
+
+template-coverage
+
+## Publishing To NPM
+
+To publish to NPM, first login using
+
+npm login
+
+Publish the package using
+
+npm publish
