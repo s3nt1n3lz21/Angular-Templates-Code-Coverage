@@ -26,13 +26,7 @@ It checks for:
 
 It will print out the coverage percentage of your html templates. It will throw an error if the coverage is less than the failBelow limit you specify. Default is 80%.
 
-Free Version (Only NgIfs)
-
 NPM  https://www.npmjs.com/package/angular-templates-code-coverage
-
-Full Version
-
-PRIVJS https://app.privjs.com/package?pkg=angular-templates-code-coverage
 
 ## Install
 
@@ -41,9 +35,3 @@ npm install angular-templates-code-coverage --save-dev
 ## Usage
 
 template-coverage --failBelow=70
-
-## Report Bugs And Request New Features
-
-You can report bugs and request new features here.
-
-https://github.com/s3nt1n3lz21/Angular-Templates-Code-Coverage-Feedback

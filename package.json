@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest --verbose=true --failBelow=0",
     "run": "bin/index.js",
-    "publish-local": "npm publish --registry http://localhost:4873",
-    "publish-public": "npm publish --registry https://r.privjs.com"
+    "publish-local": "npm publish --registry http://localhost:4873"
   },
   "bin": "./index.js",
   "repository": {
